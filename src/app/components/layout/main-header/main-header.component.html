@@ -1,0 +1,111 @@
+<header id="header">
+  <div class="header-logo">
+    <img src="/src/assets/imgs/VegaLogo.png" alt="Logo d'application" />
+  </div>
+
+  <span class="toggle-button" (click)="toggleMenu()">
+    <i class="pi pi-list"></i>
+  </span>
+
+  <!-- <div class="global-filter-container">
+		<ged-global-filter></ged-global-filter>
+	</div> -->
+
+  <div class="header-menu">
+    <ng-container *ngIf="!isMobile && user && user.firstName">
+      <div>{{ user.firstName }}</div>
+    </ng-container>
+    <a>
+      <span (click)="accountMenu.toggle($event)">
+        <i class="pi pi-user"></i>
+      </span>
+    </a>
+  </div>
+</header>
+
+<ng-container *ngIf="!isOnline">
+  <div class="offline-banner">
+    <span>Pas de connexion Internet !</span>
+  </div>
+</ng-container>
+
+<nav id="side-bar">
+  <a
+    [routerLink]="['/dashboard']"
+    [routerLinkActive]="['active-link']"
+    (click)="toggleMenuIfMobile()"
+  >
+    <div class="nav-item">
+      <i class="pi pi-chart-line"></i>
+      <span class="nav-item-title">Dashboard</span>
+    </div>
+  </a>
+
+  <a
+    [routerLink]="['/stocks']"
+    [routerLinkActive]="['active-link']"
+    (click)="toggleMenuIfMobile()"
+  >
+    <div class="nav-item">
+      <i class="pi pi-briefcase"></i>
+      <span class="nav-item-title">Stock management</span>
+    </div>
+  </a>
+
+  <a
+    [routerLink]="['/orders']"
+    [routerLinkActive]="['active-link']"
+    (click)="toggleMenuIfMobile()"
+  >
+    <div class="nav-item">
+      <i class="pi pi-shopping-cart"></i>
+      <span class="nav-item-title">Commandes</span>
+    </div>
+  </a>
+
+  <a
+    [routerLink]="['/users']"
+    [routerLinkActive]="['active-link']"
+    (click)="toggleMenuIfMobile()"
+  >
+    <div class="nav-item">
+      <i class="pi pi-users"></i>
+      <span class="nav-item-title">Utilisateurs</span>
+    </div>
+  </a>
+
+  <!-- <a
+    [routerLink]="['/utilisateurs']"
+    [routerLinkActive]="['active-link']"
+    (click)="toggleMenuIfMobile()"
+  >
+    <div class="nav-item">
+      <span class="material-icons md-30">group</span>
+      <span class="nav-item-title">Categories</span>
+    </div>
+  </a>
+
+  <a
+    [routerLink]="['/habilitations']"
+    [routerLinkActive]="['active-link']"
+    (click)="toggleMenuIfMobile()"
+  >
+    <div class="nav-item">
+      <span class="material-icons md-30">lock</span>
+      <span class="nav-item-title">Rôles & Privilèges</span>
+    </div>
+  </a>
+
+  <a
+    [routerLink]="['/configuration']"
+    [routerLinkActive]="['active-link']"
+    (click)="toggleMenuIfMobile()"
+  >
+    <div class="nav-item">
+      <span class="material-icons md-30">settings</span>
+      <span class="nav-item-title">Configuration</span>
+    </div>
+  </a> -->
+</nav>
+
+<p-menu #accountMenu [popup]="true" [model]="accountOptions"></p-menu>

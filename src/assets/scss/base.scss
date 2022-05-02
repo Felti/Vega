@@ -1,0 +1,43 @@
+@font-face {
+	font-family: 'Rawline Regular';
+	src: local('Rawline Regular'), url('../fonts/rawline-400.woff') format('woff');
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+
+	font-size: 16px;
+	font-style: normal;
+	font-weight: normal;
+	font-family: 'Rawline Regular', 'Open Sans', sans-serif;
+
+	color: #484848;
+	background-color: #fafafa;
+}
+
+// Override PrimeNG's font family
+body .p-component {
+	font-family: 'Rawline Regular', 'Open Sans', sans-serif;
+}
+
+.red-color {
+	color: #d9534f;
+}
+
+.blue-color {
+	color: #4b86b4;
+}
+
+.green-color {
+	color: #559e83;
+}
+
+label {
+	margin-bottom: 5px;
+}
+
+.input-group {
+	margin: 1rem 0;
+}

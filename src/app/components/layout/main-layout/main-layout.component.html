@@ -1,0 +1,9 @@
+<app-main-header (toggleContent)="collapseContent()"></app-main-header>
+<!-- Layout Content -->
+<div class="main-layout-wrapper" id="content">
+	<div class="main-content-wrapper">
+		<router-outlet></router-outlet>
+	</div>
+	<!-- footer -->
+	<app-main-footer class="footer"></app-main-footer>
+</div>

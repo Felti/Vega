@@ -1,0 +1,23 @@
+@import '../../../../assets/scss/layout.scss';
+
+.wrapper {
+	padding: 0 1rem;
+	min-height: 30px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #fff;
+	background-color: silver;
+	display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: space-between;
+}
+
+.version,
+.copyright {
+	color: #000;
+}
+
+a {
+	text-decoration: none;
+}

@@ -1,0 +1,15 @@
+export enum Role {
+	ROLE_ROOT = 'ROLE_ROOT',
+	ROLE_ADMIN = 'ROLE_ADMIN',
+	ROLE_MODERATOR = 'ROLE_MODERATOR',
+	ROLE_VIEWER = 'ROLE_VIEWER',
+	ROLE_USER = 'ROLE_USER',
+}
+
+export enum RoleIndex {
+	ROLE_ROOT = 1,
+	ROLE_ADMIN = 2,
+	ROLE_MODERATOR = 3,
+	ROLE_VIEWER = 4,
+	ROLE_USER = 5,
+}

@@ -1,0 +1,18 @@
+<router-outlet></router-outlet>
+
+<p-toast
+  [baseZIndex]="9999999"
+  [breakpoints]="{
+    '768px': { width: '100%', right: '0', left: '0', top: '60px' }
+  }"
+></p-toast>
+
+<p-toast
+  key="ws-notif"
+  position="bottom-right"
+  [baseZIndex]="9999999"
+  [breakpoints]="{
+    '768px': { width: '100%', right: '0', left: '0', top: '80px' }
+  }"
+  class="ws-toast"
+></p-toast>

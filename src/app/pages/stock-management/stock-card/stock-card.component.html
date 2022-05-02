@@ -1,0 +1,314 @@
+<ng-container *ngIf="stock">
+  <div
+    class="container"
+    style="display: flex; flex-direction: column; padding: 10px"
+  >
+    <!-- Header  -->
+    <div
+      class="card-header"
+      style="display: flex; flex-direction: row; justify-content: space-between"
+    >
+      <!-- Tags and Date added -->
+      <div
+        class="card-categories-tags"
+        style="display: flex; flex-direction: row"
+      >
+        <div class="card-tags">
+          <ng-container *ngFor="let tag of stock.tags">
+            <span
+              class="tag-badge badge"
+              style="
+                color: #fff;
+                padding: 2px 3px;
+                border-radius: 2px;
+                background-color: #51b6ec;
+                font-size: 10px;
+                justify-content: center;
+                font-weight: bold;
+                margin-right: 5px;
+                box-shadow: 2px 2px 2px rgb(0 0 0 / 10%);
+              "
+            >
+              {{ tag.name }}
+            </span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="card-date-added" style="display: flex; flex-direction: row">
+        <span style="font-weight: bolder; margin-right: 5px; font-size: 13px">
+          Added :
+        </span>
+        <span style="font-size: 13px">
+          {{ stock.createdAt | date: "dd/MM/yyyy" }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Body  -->
+    <div
+      class="card-body"
+      style="display: flex; flex-direction: raw; margin: 10px 0px"
+    >
+      <!-- Image and status -->
+      <div
+        class="card-image-status-container"
+        style="display: flex; flex-direction: column"
+      >
+        <div
+          class="card-image"
+          style="
+            width: 95px;
+            height: 95px;
+            border-radius: 2px;
+            box-shadow: 4px 4px 4px rgb(0 0 0 / 15%);
+          "
+        >
+          <img
+            height="95px"
+            height="95px"
+            src="https://asset.swarovski.com/images/$size_1450/t_swa103/b_rgb:ffffff,c_scale,dpr_3.0,f_auto,w_500/5558186_png/magic-bracelet--snowflake--white--rose-gold-tone-plated-swarovski-5558186.png"
+            alt=""
+          />
+        </div>
+
+        <div
+          class="card-status"
+          [style]="{
+            color: '#fff',
+            padding: '2px 3px',
+            'border-radius': '2px',
+            'background-color': appendColorTOstatus(),
+            'font-size': '14px',
+            'text-align': 'center',
+            'margin-top': '10px',
+            'box-shadow': '2px 2px 4px rgb(0 0 0 / 10%)'
+          }"
+        >
+          {{ status }}
+        </div>
+      </div>
+      <!-- Basic info -->
+      <div
+        class="card-body-info-container"
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          width: 100%;
+        "
+      >
+        <div
+          class="card-basic-info-container-left"
+          style="display: flex; flex-direction: column; padding-left: 10px"
+        >
+          <div
+            class="card-title"
+            style="
+              font-weight: 700;
+              color: black;
+              font-size: 20px;
+              margin-bottom: 5px;
+            "
+          >
+            {{ stock.name }}
+          </div>
+          <div
+            class="card-unit-price"
+            style="display: flex; flex-direction: row; margin-bottom: 5px"
+          >
+            <em class="pi pi-dollar">
+              :
+              <span
+                style="
+                  font-family: Rawline Regular;
+                  font-style: italic;
+                  font-size: 13px;
+                  font-weight: bold;
+                  color: #ec3e0d;
+                "
+              >
+                {{ stock.unitPrice }} DH</span
+              ></em
+            >
+          </div>
+
+          <div class="card-selling-prince">
+            <div
+              class="card-unit-price"
+              style="display: flex; flex-direction: row; margin-bottom: 5px"
+            >
+              <em class="pi pi-money-bill">
+                :
+                <span
+                  style="
+                    font-family: Rawline Regular;
+                    font-style: italic;
+                    font-size: 13px;
+                    font-weight: bold;
+                    color: #03a60b;
+                  "
+                >
+                  {{ stock.sellingPrice }} DH</span
+                ></em
+              >
+            </div>
+          </div>
+
+          <div class="card-provder">
+            <div
+              class="card-unit-price"
+              style="display: flex; flex-direction: row; margin-bottom: 5px"
+            >
+              <em class="pi pi-user">
+                :
+                <span
+                  style="
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 15px;
+                  "
+                >
+                  {{ stock.provider.firstName }}
+                </span>
+              </em>
+            </div>
+          </div>
+
+          <div
+            class="card-available-sizes"
+            style="
+              display: flex;
+              flex-direction: row;
+              border-radius: 50px;
+              padding: 5px;
+              width: fit-content;
+            "
+            [ngStyle]="{
+              border: stock.quantity ? '#cbcbcb solid 1px' : ''
+            }"
+          >
+            <ng-container *ngFor="let feature of stock.features">
+              <div
+                *ngIf="feature.nbrAvailable > 0"
+                (click)="
+                  showMoreInfoPopup(feature.id); $event.stopPropagation()
+                "
+                class="size-badge"
+                style="
+                  height: 25px;
+                  width: 25px;
+                  background-color: rgb(254, 135, 7);
+                  border-radius: 50%;
+                  display: inline-block;
+                  text-align: center;
+                  font-size: 13px;
+                  font-weight: bold;
+                  margin-right: 3px;
+                  color: white;
+                "
+              >
+                {{ feature.name }}
+
+                <div
+                  class="list-card-feature-more-info"
+                  [id]="'more-info-features-' + $any(feature.id)"
+                >
+                  <ng-container
+                    *ngFor="let color of feature.colors; let isLast = last"
+                  >
+                    <ng-container *ngIf="color.available > 0">
+                      <span
+                        class="list-card-feature-name"
+                        style="
+                          display: flex;
+                          color: black;
+                          flex-direction: row;
+                          margin: 10px;
+                        "
+                      >
+                        <div
+                          [style]="
+                            'width:20px;border-radius:3px; margin-right: 10px; height:20px; background-color :' +
+                            color.name
+                          "
+                        ></div>
+                        : {{ color.available }}</span
+                      >
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div
+          class="card-metric-container-right"
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          "
+        >
+          <div
+            class="card-metric-quantity"
+            style="
+              font-family: Arial, Helvetica, sans-serif;
+              font-weight: bolder;
+              font-size: 25px;
+              display: flex;
+              flex-direction: row;
+            "
+          >
+            <span style="color: rgb(222, 123, 41)">{{ stock.quantity }}</span>
+            <span style="margin: 0px 5px"> /</span>
+            <span> {{ stock.initialQuantity }}</span>
+          </div>
+
+          <div
+            class="card-metric-total"
+            style="flex-direction: row; font-size: 14px"
+          >
+            <div
+              class="card-metric-total-revenu"
+              style="display: flex; flex-direction: row"
+            >
+              <span class="bold" style="font-weight: bolder">R : </span>
+              <span class="bold" style="font-weight: bolder">{{
+                totalRevenu
+              }}</span>
+            </div>
+            <div class="card-metric-total-cost">
+              <span class="bold" style="font-weight: bolder">CT : </span>
+              {{ totalCost }}
+            </div>
+            <div
+              class="card-metric-total-separator"
+              style="border-bottom: 1px solid #000000"
+            ></div>
+            <div
+              style="display: flex; flex-direction: row"
+              class="card-metric-total-cost"
+            >
+              <span
+                class="bold"
+                style="
+                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                "
+                >RN :
+              </span>
+              <span
+                class="bold"
+                [ngStyle]="{
+                  color: netRevenu > 0 ? '#038501' : '#c03230'
+                }"
+                style="font-weight: bolder"
+              >
+                {{ netRevenu }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

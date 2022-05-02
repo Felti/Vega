@@ -1,0 +1,12 @@
+@import '/src/assets/scss/variables.scss';
+::ng-deep {
+	.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
+		background: $secondary-color;
+		border-color: $secondary-color;
+	}
+
+	.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+		background: $primary-color;
+		border-color: $primary-color;
+	}
+}

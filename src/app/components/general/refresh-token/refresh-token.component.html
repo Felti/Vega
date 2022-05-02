@@ -1,0 +1,30 @@
+<div class="refresh-token-wrapper">
+	<ng-container *ngIf="messageObject">
+		<p>{{ messageObject }}</p>
+	</ng-container>
+	<ng-container *ngIf="messageBody">
+		<p>{{ messageBody }}</p>
+	</ng-container>
+
+	<input id="login" type="text" [(ngModel)]="login" pInputText />
+	<p-password inputId="password" [toggleMask]="true" [feedback]="false" [(ngModel)]="password"></p-password>
+
+	<button
+		pButton
+		pRipple
+		class="w-full"
+		(click)="signIn()"
+		label="Rafraîchir la session"
+		[disabled]="buttonDisabled || !password || password === ''"
+		[icon]="buttonDisabled ? 'pi pi-spin pi-spinner' : 'pi pi-user'"
+	></button>
+
+	<button
+		pButton
+		pRipple
+		(click)="signOut()"
+		icon="pi pi-sign-out"
+		label="Se déconnecter"
+		class="w-full p-button-outlined p-button-danger"
+	></button>
+</div>

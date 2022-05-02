@@ -1,0 +1,71 @@
+<div
+  class="container"
+  style="
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 14px 3px rgb(0 0 0 / 15%);
+    padding: 10px;
+    margin: 7px 0;
+  "
+  [ngStyle]="{
+    'background-color': isRevenu ? '#95DA9C' : '#F97A52'
+  }"
+>
+  <div
+    class="center"
+    style="
+      text-align: center;
+      width: 100%;
+      font-size: 20px;
+      color: white;
+      text-transform: uppercase;
+    "
+  >
+    <div class="card-title-header">{{ title }}</div>
+    <div class="card-body">24 000</div>
+    <div
+      class="separator"
+      style="
+        border-bottom: 1px solid rgb(255, 255, 255);
+        width: 100%;
+        margin: 10px 0px;
+      "
+    ></div>
+  </div>
+
+  <ng-container *ngIf="isRevenu">
+    <div
+      class="card-detail-info"
+      style="
+        text-transform: uppercase;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+          sans-serif;
+
+        font-size: 14px;
+        color: white;
+      "
+    >
+      <div class="card-section-one">Raw revenu : 20 000DH</div>
+      <div class="card-section-two">Total articles solde : 55/100 (40%)</div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isCost">
+    <div
+      class="card-detail-info"
+      style="
+        margin-top: 10px;
+        text-transform: uppercase;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+          sans-serif;
+
+        font-size: 14px;
+        color: white;
+      "
+    >
+      <!-- <div class="card-section-one">Raw</div> -->
+      <div class="card-section-two">Total unsold articles : 55/100 (40%)</div>
+    </div>
+  </ng-container>
+</div>

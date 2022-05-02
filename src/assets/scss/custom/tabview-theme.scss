@@ -1,0 +1,7 @@
+@import '/src/assets/scss/variables.scss';
+
+::ng-deep {
+	.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+		border-color: $primary-color;
+	}
+}

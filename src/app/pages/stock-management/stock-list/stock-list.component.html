@@ -1,0 +1,46 @@
+<div class="container" style="display: flex; flex-direction: column">
+  <div class="card-container">
+    <div style="display: flex; flex-direction: row">
+      <span
+        style="
+          padding: 0px 5px;
+          margin-right: 5px;
+          border-radius: 3px;
+          color: white;
+          font-size: 13px;
+          font-weight: bold;
+          background-color: rgb(226, 43, 43);
+        "
+        >{{ totalElements }}</span
+      >
+      <span>Stock available</span>
+    </div>
+    <ng-container
+      *ngIf="stockPage && stockPage.content && stockPage.content.length > 0"
+    >
+      <app-stock-card [stock]="stock" *ngFor="let stock of stockPage.content">
+      </app-stock-card>
+    </ng-container>
+  </div>
+
+  <div class="paginator-container">
+    <ng-container
+      *ngIf="
+        stockPage &&
+        stockPage.pageable &&
+        stockPage.totalElements &&
+        stockPage.pageable.pageSize
+      "
+    >
+      <p-paginator
+        #paginator
+        [pageLinkSize]="displayPageNumbers()"
+        [rows]="stockPage.pageable.pageSize"
+        [totalRecords]="stockPage.totalElements"
+        (onPageChange)="paginate($event)"
+        [rowsPerPageOptions]="[9, 12, 15, 18]"
+      >
+      </p-paginator>
+    </ng-container>
+  </div>
+</div>

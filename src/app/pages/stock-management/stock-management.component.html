@@ -1,0 +1,39 @@
+<div>
+  <app-page-header
+    subTitle="Manage Ins & Outs"
+    title="STOCK MANAGEMENT"
+  ></app-page-header>
+</div>
+
+<div style="display: flex; flex-direction: row-reverse">
+  <button
+    pButton
+    pRipple
+    type="button"
+    icon="pi pi-plus"
+    label="Stock"
+    (click)="AddStock()"
+  ></button>
+</div>
+
+<!-- <div class="stats-container" style="padding-bottom: 0">
+  <app-stock-stats></app-stock-stats>
+</div> -->
+
+<div class="container" style="width: 100%">
+  <app-stock-list
+    [stockPage]="stockPage"
+    [totalElements]="totalElements"
+    style="width: fit-content"
+    (pageChanged)="getStockPage($event.page, $event.size)"
+  >
+    ></app-stock-list
+  >
+
+  <!-- (softDelete)="softDeleteDocument($event)"
+(undelete)="restoreDocument($event)"
+(hardDelete)="hardDelete($event)"
+(modify)="goToEditResourcePage($event)"
+(approve)="validateDocumentConfirmation($event, true)"
+(reject)="validateDocumentConfirmation($event, false)" -->
+</div>

@@ -1,0 +1,16 @@
+@import '/src/assets/scss/custom/button-theme.scss';
+
+@media screen and (max-width: 768px) {
+	::ng-deep .p-dialog-footer {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.p-button-outlined {
+		margin-bottom: 5px !important;
+	}
+
+	button {
+		margin-right: 0 !important;
+	}
+}

@@ -1,0 +1,29 @@
+@import '/src/assets/scss/custom/button-theme.scss';
+
+.refresh-token-wrapper {
+	width: 500px;
+}
+
+p {
+	margin-top: 0;
+}
+
+input {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+button {
+	margin-top: 1rem;
+}
+
+:host ::ng-deep .p-password,
+:host ::ng-deep .p-password input {
+	width: 100%;
+}
+
+@media screen and (max-width: 769px) {
+	.refresh-token-wrapper {
+		width: auto;
+	}
+}

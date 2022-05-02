@@ -1,0 +1,7 @@
+@import '/src/assets/scss/variables.scss';
+
+::ng-deep {
+	.p-inputtext:enabled:focus {
+		border-color: $secondary-color;
+	}
+}

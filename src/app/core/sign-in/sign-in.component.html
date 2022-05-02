@@ -1,0 +1,65 @@
+<div class="flex align-items-center justify-content-center sign-in-wrapper">
+  <div
+    class="surface-card p-4 shadow-2 border-round w-full lg:w-4 sign-in-form"
+  >
+    <div class="logo-wrapper">
+      <img
+        width="250"
+        src="../../../assets/imgs/VegaLogo.png"
+        alt="Logo d'application"
+      />
+    </div>
+
+    <div class="text-center my-5">
+      <div class="text-3xl mb-3">Bonjour !</div>
+      <span class="line-height-3">Connectez-vous à la plateforme</span>
+
+      <ng-container *ngIf="!isOnline">
+        <div class="offline-banner">
+          <span>Pas de connexion Internet !</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <div>
+      <label for="email" class="block mb-2">Login</label>
+      <input
+        id="email"
+        type="text"
+        pInputText
+        class="w-full mb-3"
+        [(ngModel)]="login"
+      />
+
+      <label for="password" class="block mb-2">Mot de passe</label>
+      <p-password
+        inputId="password"
+        [toggleMask]="true"
+        [feedback]="false"
+        [(ngModel)]="password"
+      ></p-password>
+
+      <!-- <div class="flex mt-2 mb-3 link-wrapper">
+				<a class="no-underline ml-2 text-blue-500 cursor-pointer" (click)="sendToResetPasswordPage()">
+					Mot de passe oublié ?
+				</a>
+			</div> -->
+
+      <button
+        pButton
+        pRipple
+        class="w-full"
+        (click)="signIn()"
+        label="Se connecter"
+        [icon]="buttonDisabled ? 'pi pi-spin pi-spinner' : 'pi pi-user'"
+        [disabled]="
+          buttonDisabled ||
+          !login ||
+          login === '' ||
+          !password ||
+          password === ''
+        "
+      ></button>
+    </div>
+  </div>
+</div>

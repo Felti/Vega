@@ -1,0 +1,7 @@
+@import '/src/assets/scss/variables.scss';
+
+::ng-deep {
+	.p-progressbar .p-progressbar-value {
+		background-color: $primary-color;
+	}
+}

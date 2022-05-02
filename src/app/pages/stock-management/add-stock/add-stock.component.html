@@ -1,0 +1,393 @@
+<div class="container">
+  <ng-container *ngIf="addStockForm">
+    <form [formGroup]="addStockForm">
+      <div class="form-container" style="display: flex; flex-direction: row">
+        <!-- Basic info // Left section -->
+        <div class="form-wrapper-left">
+          <!-- name input -->
+          <div style="display: flex; flex-direction: column; margin: 10px 0px">
+            <label
+              for="name"
+              style="font-family: Arial, Helvetica, sans-serif"
+              class="required"
+              >Name</label
+            >
+            <input pInputText type="text" id="name" formControlName="name" />
+
+            <small
+              class="error-msg red-color"
+              *ngIf="
+                addStockForm?.get('name')?.touched &&
+                addStockForm?.get('name')?.dirty &&
+                addStockForm?.get('name')?.errors
+              "
+            >
+              The name is required
+            </small>
+          </div>
+
+          <!-- description input -->
+          <div style="display: flex; flex-direction: column; margin: 10px 0px">
+            <label
+              for="stock-description"
+              style="font-family: Arial, Helvetica, sans-serif"
+              >Description</label
+            >
+
+            <textarea
+              pInputTextarea
+              [rows]="3"
+              [cols]="30"
+              type="text"
+              maxlength="100"
+              id="stock-description"
+              formControlName="description"
+            ></textarea>
+            <div>
+              <small
+                class="error-msg red-color"
+                *ngIf="addStockForm?.get('description')?.errors?.maxlength"
+              >
+                Vous avez dépassé la limite de 250 caractères.
+              </small>
+              <small class="description-char-count">
+                {{
+                  addStockForm?.get("description")?.value == null
+                    ? 0
+                    : addStockForm?.get("description")?.value?.length
+                }}/100
+              </small>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: row">
+            <!-- unit cost input -->
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                margin: 10px 0px;
+                margin-right: 10px;
+              "
+            >
+              <label
+                for="unit-cost"
+                style="font-family: Arial, Helvetica, sans-serif"
+                class="required"
+                >Unit cost</label
+              >
+              <input
+                pInputText
+                type="number"
+                id="unit-cost"
+                formControlName="unitCost"
+              />
+
+              <small
+                class="error-msg red-color"
+                *ngIf="
+                  addStockForm?.get('unitCost')?.touched &&
+                  addStockForm?.get('unitCost')?.dirty &&
+                  addStockForm?.get('unitCost')?.errors
+                "
+              >
+                The unit cost is required
+              </small>
+            </div>
+
+            <!-- unit price input -->
+            <div
+              style="display: flex; flex-direction: column; margin: 10px 0px"
+            >
+              <label
+                for="unit-price"
+                style="font-family: Arial, Helvetica, sans-serif"
+                class="required"
+                >Unit price</label
+              >
+              <input
+                pInputText
+                id="unit-price"
+                formControlName="unitPrice"
+                type="number"
+              />
+
+              <small
+                class="error-msg red-color"
+                *ngIf="
+                  addStockForm?.get('unitPrice')?.touched &&
+                  addStockForm?.get('unitPrice')?.dirty &&
+                  addStockForm?.get('unitPrice')?.errors
+                "
+              >
+                The unit price is required
+              </small>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin: 10px 0px">
+            <label
+              for="unit-price"
+              style="font-family: Arial, Helvetica, sans-serif"
+              class="required"
+              >Provider</label
+            >
+            <p-dropdown
+              dataKey="id"
+              [options]="providers"
+              optionLabel="lastName"
+              [filter]="true"
+              filterBy="lastName"
+              [showClear]="true"
+              [autoDisplayFirst]="false"
+              emptyMessage="Aucun utilisateur disponible"
+              emptyFilterMessage="Aucun utilisateur trouvé"
+              formControlName="provider"
+              appendTo="body"
+            >
+            </p-dropdown>
+          </div>
+          <small
+            class="error-msg red-color"
+            *ngIf="
+              addStockForm?.get('provider')?.touched &&
+              addStockForm?.get('provider')?.dirty &&
+              addStockForm?.get('provider')?.errors
+            "
+          >
+            The provider is required
+          </small>
+          <div style="display: flex; flex-direction: column; margin: 10px 0px">
+            <label
+              for="unit-price"
+              style="font-family: Arial, Helvetica, sans-serif"
+              class="required"
+              >Tags</label
+            >
+            <p-multiSelect
+              dataKey="id"
+              appendTo="body"
+              optionLabel="name"
+              [options]="tags"
+              [filter]="true"
+              [resetFilterOnHide]="true"
+              filterPlaceholder="Chercher"
+              placeholder="Select tag"
+              emptyFilterMessage="Aucun résultat disponible"
+              [style]="{ width: '100%' }"
+              formControlName="selectedTags"
+            >
+            </p-multiSelect>
+          </div>
+          <small
+            class="error-msg red-color"
+            *ngIf="
+              addStockForm?.get('selectedTags')?.touched &&
+              addStockForm?.get('selectedTags')?.dirty &&
+              addStockForm?.get('selectedTags')?.errors
+            "
+          >
+            The Tags are required
+          </small>
+        </div>
+
+        <div
+          class="separator"
+          style="border-left: 1px solid rgb(231, 231, 231); margin: 10px"
+        ></div>
+
+        <!-- Features// right section -->
+        <div formArrayName="features" class="form-wrapper-right">
+          <!-- features input -->
+          <div
+            class="features-container"
+            style="max-height: 450px; overflow: scroll; width: 520px"
+          >
+            <ng-container
+              *ngFor="
+                let featureLine of featureList().controls;
+                let featureIndex = index
+              "
+            >
+              <div [formGroupName]="featureIndex">
+                <div
+                  class="name-input-container"
+                  style="
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <label
+                    for="feature-{{ featureIndex }}"
+                    class="required"
+                    style="
+                      margin-right: 10px;
+                      font-family: Arial, Helvetica, sans-serif;
+                    "
+                  >
+                    Size
+                  </label>
+                  <input
+                    pInputText
+                    type="text"
+                    id="feature-{{ featureIndex }}"
+                    formControlName="name"
+                    style="width: 50px; height: 30px; font-size: 15px"
+                  />
+                </div>
+                <div
+                  class="features-left-container"
+                  style="display: flex; flex-direction: row"
+                >
+                  <div
+                    formArrayName="colors"
+                    style="
+                      border: 1px solid #cbcbcb;
+                      border-radius: 5px;
+                      width: 100%;
+                    "
+                  >
+                    <div
+                      class="color-section-header"
+                      style="
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        padding: 10px;
+                        width: 100%;
+                        border-bottom: 1px solid rgb(180, 180, 180);
+                      "
+                    >
+                      <label class="required" for=""> Colors</label>
+                      <div>
+                        <em
+                          (click)="addFeatureColor(featureIndex)"
+                          style="cursor: pointer; color: rgb(34, 169, 7)"
+                          class="pi pi-plus-circle"
+                        ></em>
+                      </div>
+                    </div>
+                    <div
+                      style="
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                      "
+                    >
+                      <ng-container
+                        *ngFor="
+                          let color of featureColorsList(featureIndex)
+                            ?.controls;
+                          let colorIndex = index
+                        "
+                      >
+                        <div
+                          [formGroupName]="colorIndex"
+                          style="
+                            padding: 10px 20px;
+                            display: flex;
+                            flex-direction: row;
+                          "
+                        >
+                          <p-colorPicker
+                            appendTo="body"
+                            formControlName="name"
+                          ></p-colorPicker>
+
+                          <label
+                            class="required"
+                            style="margin: 0px 5px"
+                            for="color-{{ colorIndex }}"
+                          >
+                            available
+                          </label>
+                          <input
+                            pInputText
+                            type="number"
+                            id="color-{{ colorIndex }}"
+                            formControlName="available"
+                            style="
+                              width: 60px;
+                              height: 30px;
+                              font-size: 15px;
+                              border-radius: 2px !important;
+                              margin-right: 5px;
+                            "
+                          />
+                          <div
+                            style="align-self: center"
+                            (click)="
+                              removeFeatureColor(featureIndex, colorIndex)
+                            "
+                          >
+                            <i
+                              class="pi pi-trash"
+                              style="cursor: pointer; color: red"
+                            ></i>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div
+                    (click)="removeFeatureLine(featureIndex)"
+                    style="
+                      color: red;
+                      align-self: center;
+                      cursor: pointer;
+                      margin: 10px;
+                    "
+                  >
+                    <i class="pi pi-trash"></i>
+                  </div>
+                </div>
+              </div>
+              <div
+                style="
+                  border-bottom: 1px solid rgb(216, 216, 216);
+                  margin: 10px 0;
+                  width: 90%;
+                "
+              ></div>
+            </ng-container>
+
+            <div>
+              <em
+                (click)="addFeatureLine()"
+                style="cursor: pointer; color: rgb(34, 169, 7)"
+                class="pi pi-plus-circle"
+              >
+              </em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container>
+    <div class="footer bottom">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Add"
+        (click)="addStock()"
+        [disabled]="disabled || addStockForm?.invalid"
+      ></button>
+
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Cancel"
+        class="p-button-text p-button-plain"
+        [disabled]="disabled"
+        (click)="closeDialog()"
+      ></button>
+    </div>
+  </ng-container>
+</div>
+<!-- [disabled]="disabled || addStockForm?.invalid" -->

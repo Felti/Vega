@@ -1,0 +1,10 @@
+@import '/src/assets/scss/variables.scss';
+::ng-deep {
+	.p-menu .p-menu-list .p-menuitem .p-menuitem-icon {
+		color: $primary-color;
+	}
+
+	.p-menu .p-menu-list .p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon {
+		color: $secondary-color;
+	}
+}

@@ -1,0 +1,13 @@
+@import '/src/assets/scss/variables.scss';
+
+/* Header */
+$header-height: 60px;
+$header-color: #fff;
+
+/* Side Bar */
+$side-bar-color: linear-gradient(to bottom, $primary-color, $secondary-color);
+$side-bar-width: 200px;
+$side-bar-collapse-width: 60px;
+
+/* Footer */
+$footer-height: 30px;

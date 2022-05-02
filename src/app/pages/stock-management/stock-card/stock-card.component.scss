@@ -1,0 +1,26 @@
+.container {
+  padding: 1rem;
+  width: 100%;
+  min-height: 100px;
+  box-shadow: 0 0 14px 3px rgb(0 0 0 / 15%);
+  border-radius: 5px;
+  margin: 15px 0px;
+}
+
+.size-badge:hover .list-card-feature-more-info {
+  visibility: visible;
+}
+
+.list-card-feature-more-info {
+  position: absolute;
+  background-color: #ffffff;
+  visibility: hidden;
+  padding: 8px 15px;
+  box-shadow: 0 0 14px 3px rgb(0 0 0 / 20%);
+}
+
+.onHover-feature-name {
+  font-weight: bolder;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+}

@@ -1,0 +1,25 @@
+@import 'custom/input-theme';
+@import 'custom/checkbox-theme';
+@import 'custom/p-focus-theme';
+
+::ng-deep {
+	.p-autocomplete button {
+		border-color: $secondary-color;
+		background-color: $secondary-color;
+	}
+
+	.p-autocomplete button:hover {
+		border-color: $secondary-color;
+		background-color: $secondary-color;
+	}
+
+	.p-autocomplete button:enabled:hover {
+		border-color: $secondary-color;
+		background-color: $secondary-color;
+	}
+
+	.p-autocomplete button:active {
+		border-color: $secondary-color;
+		background-color: $secondary-color;
+	}
+}

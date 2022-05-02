@@ -1,0 +1,9 @@
+::ng-deep .ws-toast {
+  .p-toast .p-toast-message .p-toast-message-content {
+    background-color: #cecdcd;
+  }
+
+  .p-toast .p-toast-message {
+    box-shadow: 0 0 14px 3px rgb(0 0 0 / 15%);
+  }
+}

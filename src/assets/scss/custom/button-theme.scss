@@ -1,0 +1,36 @@
+@import '/src/assets/scss/variables.scss';
+
+button,
+::ng-deep .p-picklist .p-picklist-buttons button {
+	background: $primary-color;
+	border: 1px solid $primary-color;
+}
+
+button:enabled:hover,
+::ng-deep .p-picklist .p-picklist-buttons button:enabled:hover {
+	background: $secondary-color;
+	border-color: $secondary-color;
+}
+
+button:enabled:active,
+::ng-deep .p-picklist .p-picklist-buttons button:enabled:active {
+	background: $secondary-color;
+	border-color: $secondary-color;
+}
+
+button.p-button-outlined,
+::ng-deep .p-picklist .p-picklist-buttons button.p-button-outlined {
+	color: $primary-color;
+}
+
+button.p-button-outlined:enabled:hover,
+::ng-deep .p-picklist .p-picklist-buttons button.p-button-outlined:enabled:hover {
+	background: #ff000033;
+	color: $primary-color;
+}
+
+button.p-button-outlined:enabled:active,
+::ng-deep .p-picklist .p-picklist-buttons button.p-button-outlined:enabled:active {
+	background: #ff000033;
+	color: $primary-color;
+}

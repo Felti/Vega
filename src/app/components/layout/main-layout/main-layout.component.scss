@@ -1,0 +1,48 @@
+@import "../../../../assets/scss/layout.scss";
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.footer {
+  bottom: 0;
+  width: 100%;
+  z-index: 99999;
+  position: fixed;
+  min-height: $footer-height;
+}
+
+.content-collapse {
+  overflow: hidden;
+}
+
+.main-content-wrapper {
+  padding: 10px;
+  min-height: calc(100vh - #{$footer-height + $header-height});
+}
+
+@media screen and (min-width: 769px) {
+  .layout-wrapper-collapse {
+    margin-left: $side-bar-collapse-width !important;
+  }
+
+  .main-layout-wrapper {
+    height: 100%;
+    transition: all 0.3s ease-in-out;
+    margin: $header-height 0 $footer-height $side-bar-width;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .layout-wrapper-collapse {
+    height: 100%;
+    margin-left: $side-bar-collapse-width;
+  }
+
+  .main-layout-wrapper {
+    height: 100%;
+    margin: $header-height 0 $footer-height 0;
+  }
+}

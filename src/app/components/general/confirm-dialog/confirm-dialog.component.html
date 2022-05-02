@@ -1,0 +1,21 @@
+<p-confirmDialog
+	#cd
+	icon="pi pi-info-circle"
+	[position]="isMobile ? 'bottom' : 'middle'"
+	[style]="{ 'max-width': '600px', margin: isMobile ? '0 10px 40px 10px' : '0 10px' }"
+>
+	<ng-template pTemplate="header">
+		<h2>Confirmation</h2>
+	</ng-template>
+	<ng-template pTemplate="footer">
+		<button
+			pButton
+			type="button"
+			icon="pi pi-times"
+			class="p-button-outlined"
+			[label]="cd.rejectButtonLabel"
+			(click)="cd.reject()"
+		></button>
+		<button pButton type="button" icon="pi pi-check" [label]="cd.acceptButtonLabel" (click)="cd.accept()"></button>
+	</ng-template>
+</p-confirmDialog>
