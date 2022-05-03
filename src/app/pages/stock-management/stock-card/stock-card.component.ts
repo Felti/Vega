@@ -79,7 +79,7 @@ export class StockCardComponent implements OnInit {
     }
   }
 
-  showMoreInfoPopup(featureId: number | number) {
+  showMoreInfoPopup(featureId: number) {
     const moreInfoPopup = document.getElementById(
       `more-info-features-${featureId}`
     );

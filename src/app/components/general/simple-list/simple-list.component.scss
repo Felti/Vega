@@ -1,0 +1,125 @@
+@import "../../../../assets/scss/custom/button-theme.scss";
+@import "../../../../assets/scss/custom/multi-select-theme.scss";
+
+.btn-wrapper,
+.table-header {
+  display: flex;
+}
+
+.table-header {
+  justify-content: space-between;
+}
+
+.btn-wrapper {
+  justify-content: space-around;
+}
+
+.item-enabled i,
+.item-deleted i,
+.item-required-default i {
+  color: #d9534f;
+}
+
+.item-not-required-default i {
+  color: #4b86b4;
+
+  font-size: 1rem;
+}
+
+.item-disabled i,
+.item-not-deleted i {
+  color: #559e83;
+}
+
+.item-required-default i {
+  font-size: 1rem;
+}
+
+.center-content {
+  text-align: center !important;
+}
+
+td {
+  overflow-wrap: break-word;
+}
+
+.no-element-message {
+  text-align: center !important;
+}
+
+:host ::ng-deep {
+  .responsive-datatable .p-datatable-tbody > tr > td .p-column-title {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 40rem) {
+  .btn-wrapper-expanded {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-around;
+  }
+
+  :host ::ng-deep {
+    // Columns selected bar
+    .p-multiselect {
+      width: 100%;
+    }
+
+    // Search bar
+    .p-inputtext {
+      width: 100%;
+      margin: 5px 0 0 0;
+    }
+
+    // Table
+    .p-datatable {
+      &.responsive-datatable {
+        border: 1px solid #f3f2f1;
+
+        .p-paginator-top {
+          border-width: 1px 0 1px 0;
+        }
+
+        .p-paginator-bottom {
+          border-width: 0;
+        }
+
+        .p-datatable-thead > tr > th,
+        .p-datatable-tfoot > tr > td {
+          display: none !important;
+        }
+
+        .table-header {
+          flex-direction: column;
+        }
+
+        .p-datatable-tbody > tr > td {
+          width: 100%;
+
+          float: left;
+          display: block;
+          text-align: left;
+
+          clear: left;
+
+          border: 0 none;
+          padding: 5px 7px;
+
+          .p-column-title {
+            display: inline-block;
+
+            font-weight: bold;
+
+            min-width: 33%;
+          }
+
+          &:last-child {
+            border-bottom: 1px solid var(--surface-d);
+          }
+        }
+      }
+    }
+  }
+}

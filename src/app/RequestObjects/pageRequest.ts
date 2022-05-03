@@ -1,6 +1,6 @@
 import { PeagableDTO } from '../models/pageable';
 
-export interface StockRequest {
+export interface PageRequest {
   pageRequest: PeagableDTO;
   deleted: boolean;
 }

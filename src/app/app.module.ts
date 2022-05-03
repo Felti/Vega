@@ -24,7 +24,6 @@ import { MessageService } from 'primeng/api';
 import { SharedDirectivesModule } from './shared/shared-directives.module';
 import { SharedModule } from './shared/shared.module';
 import { interceptorProviders } from './interceptors/interceptors.provider';
-import { StatsCardComponent } from './components/general/stats-card/stats-card.component';
 
 @NgModule({
   declarations: [

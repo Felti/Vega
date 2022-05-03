@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { CustomResponse } from '../models/custom-response';
 import { StockDTO } from '../models/stock';
 import { PageableResponse } from '../models/pageable';
-import { StockRequest } from '../RequestObjects/StockRequest';
+import { PageRequest } from '../RequestObjects/pageRequest';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +21,11 @@ export class StockService {
   }
 
   get(
-    stockRequest: StockRequest
+    pageRequest: PageRequest
   ): Observable<CustomResponse<PageableResponse<StockDTO>>> {
     return this.http.post<CustomResponse<PageableResponse<StockDTO>>>(
       `${this.api}/stocks/all`,
-      stockRequest
+      pageRequest
     );
   }
 

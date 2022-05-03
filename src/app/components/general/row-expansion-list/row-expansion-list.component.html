@@ -1,0 +1,398 @@
+<p-table
+  #dt
+  dataKey="id"
+  [value]="list"
+  [columns]="columns"
+  [paginator]="true"
+  [showPageLinks]="isMobile ? false : true"
+  [paginatorPosition]="isMobile ? 'both' : 'bottom'"
+  [showCurrentPageReport]="true"
+  [currentPageReportTemplate]="
+    isMobile
+      ? '{first}-{last}/{totalRecords}'
+      : '{first} à {last} sur {totalRecords}'
+  "
+  [rows]="10"
+  [filterDelay]="0"
+  [globalFilterFields]="globalFilterFields"
+  expandableRows="true"
+  selectionMode="single"
+  styleClass="p-datatable-sm p-datatable-gridlines responsive-datatable"
+  (onFilter)="handleFilter($event, dt)"
+  (onRowSelect)="rowSelected.emit($event)"
+>
+  <ng-template pTemplate="caption">
+    <div class="table-header">
+      <!-- Columns selection -->
+      <p-multiSelect
+        [(ngModel)]="columns"
+        [options]="localColumns"
+        optionLabel="header"
+        [style]="{ minWidth: '200px' }"
+        placeholder="Colonnes à afficher"
+        selectedItemsLabel="{0} Colonnes sélectionnées"
+      ></p-multiSelect>
+      <!-- Global search -->
+      <span class="p-input-icon-left">
+        <i class="pi pi-search" aria-hidden="true"></i>
+        <input
+          pInputText
+          type="text"
+          placeholder="Search"
+          (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+        />
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th
+        scope="col"
+        pResizableColumn
+        *ngFor="let col of columns"
+        [pSortableColumn]="col.field"
+        [ngStyle]="{
+          width:
+            col.field === 'actions'
+              ? '11rem'
+              : col.field === 'id' || col.field === 'none'
+              ? '5rem'
+              : 'unset'
+        }"
+      >
+        {{ col.header }}
+        <ng-container *ngIf="col.field !== 'actions' && col.field !== 'none'">
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </ng-container>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item let-expanded="expanded">
+    <tr [pSelectableRow]="item">
+      <td
+        *ngFor="let col of columns"
+        [ngClass]="{
+          'center-content':
+            col.field === 'deleted' ||
+            col.field === 'isPaid' ||
+            col.field === 'isShipped' ||
+            col.field === 'isCancelled'
+        }"
+      >
+        <!-- Non-Actions fields -->
+        <ng-container *ngIf="col.field !== 'actions'">
+          <ng-container *ngIf="col.field === 'none'">
+            <button
+              pButton
+              pRipple
+              type="button"
+              [pRowToggler]="item"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            ></button>
+          </ng-container>
+          <!-- createdAt/updatedAt fields -->
+          <ng-container
+            *ngIf="col.field === 'createdAt' || col.field === 'modifiedAt'"
+          >
+            <ng-container *ngIf="isMobile">
+              <span class="p-column-title">{{ col.header }}</span>
+            </ng-container>
+            <span>{{ item[col.field] | date: "EEE d MMM y" }}</span>
+          </ng-container>
+          <!-- deleted field -->
+          <ng-container *ngIf="col.field === 'deleted'">
+            <span
+              [ngClass]="{
+                'item-deleted': item[col.field],
+                'item-not-deleted': !item[col.field]
+              }"
+            >
+              <ng-container *ngIf="item[col.field]">
+                <i
+                  aria-hidden="true"
+                  pTooltip="N'est pas actif"
+                  tooltipPosition="bottom"
+                  class="pi pi-ban material-icons md-24"
+                ></i>
+              </ng-container>
+              <ng-container *ngIf="!item[col.field]">
+                <i
+                  pTooltip="Actif"
+                  aria-hidden="true"
+                  tooltipPosition="bottom"
+                  class="pi pi-check-circle material-icons md-24"
+                ></i>
+              </ng-container>
+            </span>
+          </ng-container>
+          <!-- required field && default field -->
+          <ng-container
+            *ngIf="
+              col.field === 'isPaid' ||
+              col.field === 'isShipped' ||
+              col.field === 'isCancelled'
+            "
+          >
+            <span
+              [ngClass]="{
+                'item-required-default': !item[col.field],
+                'item-not-required-default': item[col.field]
+              }"
+            >
+              <ng-container *ngIf="!item[col.field]">
+                <i
+                  class="pi pi-times material-icons md-24"
+                  aria-hidden="true"
+                  pTooltip="No"
+                  tooltipPosition="bottom"
+                ></i>
+              </ng-container>
+              <ng-container *ngIf="item[col.field]">
+                <i
+                  class="pi pi-check material-icons md-24"
+                  aria-hidden="true"
+                  pTooltip="Yes"
+                  tooltipPosition="bottom"
+                ></i>
+              </ng-container>
+            </span>
+          </ng-container>
+          <!-- Other fields -->
+          <ng-container
+            *ngIf="
+              col.field !== 'createdAt' &&
+              col.field !== 'modifiedAt' &&
+              col.field !== 'deleted' &&
+              col.field !== 'none' &&
+              col.field !== 'isPaid' &&
+              col.field !== 'isShipped' &&
+              col.field !== 'isCancelled'
+            "
+          >
+            <ng-container *ngIf="isMobile">
+              <span class="p-column-title">{{ col.header }}</span>
+            </ng-container>
+            <ng-container *ngIfWithNotAvailable="item[col.field]">
+              <span class="row-value">{{ item[col.field] }}</span>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <!-- Actions fields -->
+        <ng-container *ngIf="col.field === 'actions'">
+          <div class="btn-wrapper">
+            <ng-container *ngIf="config.displayModifyBtn">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                tooltipPosition="bottom"
+                [pTooltip]="config.modifyBtnToolTip"
+                class="p-button-rounded p-button-outlined p-button-info"
+                (click)="modify.emit(item)"
+              ></button>
+            </ng-container>
+
+            <ng-container *ngIf="config.displaySoftDeleteBtn">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-times"
+                tooltipPosition="bottom"
+                [disabled]="item['deleted']"
+                [pTooltip]="config.softDeleteBtnToolTip"
+                class="p-button-rounded p-button-outlined p-button-warning"
+                (click)="softDelete.emit(item)"
+              ></button>
+            </ng-container>
+
+            <ng-container *ngIf="config.displayHardDeleteBtn">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                tooltipPosition="bottom"
+                [pTooltip]="config.hardDeleteBtnToolTip"
+                class="p-button-rounded p-button-outlined p-button-danger"
+                (click)="hardDelete.emit(item)"
+              ></button>
+            </ng-container>
+
+            <ng-container *ngIf="config.displayUndeleteBtn">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-replay"
+                tooltipPosition="bottom"
+                [disabled]="!item['deleted']"
+                [pTooltip]="config.undeleteBtnToolTip"
+                class="p-button-rounded p-button-outlined p-button-success"
+                (click)="undelete.emit(item)"
+              ></button>
+            </ng-container>
+          </div>
+        </ng-container>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-item>
+    <tr>
+      <td [attr.colspan]="expandedColumns.length + 1">
+        <div class="p-p-3" *ngIf="subListKey">
+          <p-table [value]="item[subListKey]" dataKey="id">
+            <ng-template pTemplate="header">
+              <tr>
+                <th
+                  scope="col"
+                  pResizableColumn
+                  [pSortableColumn]="col.field"
+                  *ngFor="let col of expandedColumns"
+                  [ngStyle]="{
+                    width:
+                      col.field === 'actions'
+                        ? '11rem'
+                        : col.field === 'id' || col.field === 'none'
+                        ? '5rem'
+                        : 'unset'
+                  }"
+                >
+                  {{ col.header }}
+                  <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-expanded>
+              <tr [pSelectableRow]="expanded">
+                <td
+                  *ngFor="let col of expandedColumns"
+                  [ngClass]="{ 'center-content': col.field === 'deleted' }"
+                >
+                  <!-- Non-Actions fields -->
+                  <ng-container *ngIf="col.field !== 'actions'">
+                    <!-- createdAt/updatedAt fields -->
+                    <ng-container
+                      *ngIf="
+                        col.field === 'createdAt' || col.field === 'modifiedAt'
+                      "
+                    >
+                      <ng-container *ngIf="isMobile">
+                        <span class="p-column-title">{{ col.header }}</span>
+                      </ng-container>
+                      <span>{{
+                        expanded[col.field] | date: "EEE d MMM y"
+                      }}</span>
+                    </ng-container>
+                    <!-- deleted field -->
+                    <ng-container *ngIf="col.field === 'deleted'">
+                      <span
+                        [ngClass]="{
+                          'item-deleted': expanded[col.field],
+                          'item-not-deleted': !expanded[col.field]
+                        }"
+                      >
+                        <ng-container *ngIf="expanded[col.field]">
+                          <i
+                            class="pi pi-ban material-icons md-24"
+                            aria-hidden="true"
+                            pTooltip="N'est pas actif"
+                            tooltipPosition="bottom"
+                          ></i>
+                        </ng-container>
+                        <ng-container *ngIf="!expanded[col.field]">
+                          <i
+                            class="pi pi-check-circle material-icons md-24"
+                            aria-hidden="true"
+                            pTooltip="Actif"
+                            tooltipPosition="bottom"
+                          ></i>
+                        </ng-container>
+                      </span>
+                    </ng-container>
+                    <!-- Other fields -->
+                    <ng-container
+                      *ngIf="
+                        col.field !== 'createdAt' &&
+                        col.field !== 'modifiedAt' &&
+                        col.field !== 'deleted' &&
+                        col.field !== 'none'
+                      "
+                    >
+                      <ng-container *ngIf="isMobile">
+                        <span class="p-column-title">{{ col.header }}</span>
+                      </ng-container>
+                      <span class="row-value">{{ expanded[col.field] }}</span>
+                    </ng-container>
+                  </ng-container>
+                  <!-- Actions fields -->
+                  <ng-container *ngIf="col.field === 'actions'">
+                    <div class="btn-wrapper">
+                      <ng-container *ngIf="expandedConfig.displayModifyBtn">
+                        <button
+                          pButton
+                          pRipple
+                          icon="pi pi-pencil"
+                          tooltipPosition="bottom"
+                          [pTooltip]="expandedConfig.modifyBtnToolTip"
+                          class="p-button-rounded p-button-outlined p-button-info"
+                          (click)="expandedModify.emit(expanded)"
+                        ></button>
+                      </ng-container>
+
+                      <ng-container *ngIf="expandedConfig.displaySoftDeleteBtn">
+                        <button
+                          pButton
+                          pRipple
+                          icon="pi pi-times"
+                          tooltipPosition="bottom"
+                          [disabled]="expanded['deleted']"
+                          [pTooltip]="expandedConfig.softDeleteBtnToolTip"
+                          class="p-button-rounded p-button-outlined p-button-warning"
+                          (click)="expandedSoftDelete.emit(expanded)"
+                        ></button>
+                      </ng-container>
+
+                      <ng-container *ngIf="expandedConfig.displayHardDeleteBtn">
+                        <button
+                          pButton
+                          pRipple
+                          icon="pi pi-trash"
+                          tooltipPosition="bottom"
+                          [pTooltip]="expandedConfig.hardDeleteBtnToolTip"
+                          class="p-button-rounded p-button-outlined p-button-danger"
+                          (click)="expandedHardDelete.emit(expanded)"
+                        ></button>
+                      </ng-container>
+
+                      <ng-container *ngIf="expandedConfig.displayUndeleteBtn">
+                        <button
+                          pButton
+                          pRipple
+                          icon="pi pi-replay"
+                          tooltipPosition="bottom"
+                          [disabled]="!expanded['deleted']"
+                          [pTooltip]="expandedConfig.undeleteBtnToolTip"
+                          class="p-button-rounded p-button-outlined p-button-success"
+                          (click)="expandedUndelete.emit(expanded)"
+                        ></button>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td
+                  [attr.colspan]="expandedColumns.length"
+                  class="no-element-message"
+                >
+                  Aucun élément trouvé
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

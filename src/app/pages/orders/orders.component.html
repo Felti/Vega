@@ -1,1 +1,36 @@
-<p>orders works!</p>
+<div>
+  <app-page-header
+    subTitle="Manage customers orders"
+    title="ORDER MANAGEMENT"
+  ></app-page-header>
+</div>
+
+<div style="display: flex; flex-direction: row-reverse">
+  <button
+    pButton
+    pRipple
+    type="button"
+    icon="pi pi-plus"
+    label="Order"
+    (click)="AddOrder()"
+  ></button>
+</div>
+
+<div class="container" style="width: 100%">
+  <app-row-expansion-list
+    [list]="ordersList"
+    [subListKey]="'products'"
+    [columns]="listColumnsOrders"
+    [expandedColumns]="expendedListColumns"
+    [globalFilterFields]="listFilterFields"
+    [expandedGlobalFilterFields]="listFilterFields"
+  >
+  </app-row-expansion-list>
+  <!-- 
+  [config]="listActionsConfig"
+  [expandedConfig]="expandedListActionsConfig" -->
+  <!-- (softDelete)="softDeleteDocument($event)"
+(undelete)="restoreDocument($event)"
+(hardDelete)="hardDelete($event)"
+(modify)="goToEditResourcePage($event)"
+--></div>

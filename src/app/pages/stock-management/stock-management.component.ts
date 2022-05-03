@@ -6,7 +6,7 @@ import { OperationType } from 'src/app/enums/operation-type';
 import { CustomResponse } from 'src/app/models/custom-response';
 import { PageableResponse } from 'src/app/models/pageable';
 import { StockDTO } from 'src/app/models/stock';
-import { StockRequest } from 'src/app/RequestObjects/StockRequest';
+import { PageRequest } from 'src/app/RequestObjects/pageRequest';
 import { MessageToastService } from 'src/app/services/message-toast.service';
 import { StockService } from 'src/app/services/stock.service';
 import { AddStockComponent } from './add-stock/add-stock.component';
@@ -48,7 +48,7 @@ export class StockManagementComponent implements OnInit {
           size: size,
         },
         deleted: false,
-      } as StockRequest;
+      } as PageRequest;
 
       this.stockService
         .get(pageRequest)

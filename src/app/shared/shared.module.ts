@@ -40,6 +40,8 @@ import { SharedDirectivesModule } from './shared-directives.module';
 import { PageHeaderComponent } from '../components/general/page-header/page-header.component';
 import { ConfirmDialogComponent } from '../components/general/confirm-dialog/confirm-dialog.component';
 import { RefreshTokenComponent } from '../components/general/refresh-token/refresh-token.component';
+import { SimpleListComponent } from '../components/general/simple-list/simple-list.component';
+import { RowExpansionListComponent } from '../components/general/row-expansion-list/row-expansion-list.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { RefreshTokenComponent } from '../components/general/refresh-token/refre
     RefreshTokenComponent,
     ConfirmDialogComponent,
     PageHeaderComponent,
+    SimpleListComponent,
+    RowExpansionListComponent,
   ],
   imports: [
     ColorPickerModule,
@@ -90,10 +94,10 @@ import { RefreshTokenComponent } from '../components/general/refresh-token/refre
     PageHeaderComponent,
     DynamicDialogModule,
     ConfirmDialogModule,
-
+    SimpleListComponent,
     DropdownModule,
     PaginatorModule,
-
+    RowExpansionListComponent,
     MultiSelectModule,
     TooltipModule,
     MenuModule,
