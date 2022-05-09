@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import { OperationType } from 'src/app/enums/operation-type';
 import { CustomResponse } from 'src/app/models/custom-response';
 import { OrderDTO } from 'src/app/models/order';
 import { PageableResponse } from 'src/app/models/pageable';
@@ -10,6 +11,7 @@ import { SimpleListColumn } from 'src/app/models/simple-list-column';
 import { PageRequest } from 'src/app/RequestObjects/pageRequest';
 import { MessageToastService } from 'src/app/services/message-toast.service';
 import { OrderService } from 'src/app/services/order.service';
+import { AddOrderComponent } from './add-order/add-order.component';
 
 @Component({
   selector: 'app-orders',
@@ -119,11 +121,26 @@ export class OrdersComponent implements OnInit {
             this.orderPage = res.data;
             this.ordersList = this.orderPage.content;
             this.totalElements = res.data.totalElements;
-            console.log(this.orderPage);
           }
         });
     }
   }
 
-  AddOrder() {}
+  AddOrder() {
+    console.log('called');
+
+    const dynamicDialogRef = this.dialogService.open(AddOrderComponent, {
+      header: 'Add order',
+      closable: false,
+      closeOnEscape: false,
+      style: { 'max-width': '96%' },
+      data: { operationType: OperationType.ADD },
+    });
+
+    dynamicDialogRef.onClose.subscribe((newOrder: OrderDTO) => {
+      if (newOrder) {
+        this.ordersList.unshift(newOrder);
+      }
+    });
+  }
 }

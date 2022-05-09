@@ -1,0 +1,22 @@
+<ng-container>
+  <div class="footer bottom">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Add"
+      (click)="addOrder()"
+      [disabled]="disabled || addOrderForm?.invalid"
+    ></button>
+
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Cancel"
+      class="p-button-text p-button-plain"
+      [disabled]="disabled"
+      (click)="closeDialog()"
+    ></button>
+  </div>
+</ng-container>
